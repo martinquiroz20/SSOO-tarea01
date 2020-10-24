@@ -19,11 +19,12 @@ void signal_handler( int signal_num ) {
 int main(int argc, const char *argv[])
 {  
 	signal(SIGTERM, signal_handler);   
-	signal(SIGINT, signal_handler);
-	signal(SIGUSR1, tiempo);    
-	printf("Programa hora ejecutandose. PID=%d.\n", getpid());   	  
+	signal(SIGINT, signal_handler); //registra las señales y el manejador de señales
+	signal(SIGUSR1, tiempo);   //el programa recibe la senal SIGUSR1, cada vezque llegue esa senal llamara a la funcion tiempo donde se muestra el horario
+	printf("Programa hora ejecutandose. PID=%d.\n", getpid()); //nos muestra el PID por pantalla el cual ejecutaremos con el kill -s SIGUSR1 ....
+  	  
 	while(1) { 
-		printf("Listo para recibir la señal SIGUSR1.\n");
+		printf("Listo para recibir la señal SIGUSR1.\n"); //dejamos un tiempo predeterminado de espera para que nos llegue la senal
 		sleep(2000);		
 	}	
 	return EXIT_SUCCESS;
