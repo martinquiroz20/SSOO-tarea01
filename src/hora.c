@@ -17,8 +17,7 @@ void signal_handler( int signal_num ) {
 	} 
 } 
 int main(int argc, const char *argv[])
-{
-	int count = 0;  
+{  
 	signal(SIGTERM, signal_handler);   
 	signal(SIGINT, signal_handler);
 	signal(SIGUSR1, tiempo);    
