@@ -1,34 +1,24 @@
-#include <global.hh>
-#include <unistd.h> 
-
+#include <unistd.h>
+#include <stdio.h>
+#include <signal.h>
+#include <stdlib.h>
 void signal_handler( int signal_num ) { 
-	static uint32_t trials = 0;
-	
+	static int trials = 0;
 	trials++;
-	std::cout << "Interrupt signal is (" << signal_num << ").\n"; 
-  
-	if(trials == 2){
+	printf("Interrupt signal is (%d).\n", signal_num);
+  	if(trials == 2){
 		exit(signal_num);  
 	} 
 } 
-
-int main(int argc, char* argv[])
+int main(int argc, const char *argv[])
 {
-	int count = 0; 
-	
-	// register the signals and the signal handler   
-	std::signal(SIGTERM, signal_handler);   
-	std::signal(SIGINT, signal_handler);  
-	   
-	  
-	while(++count) { 
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		std::cout << "Hello ... PID=" << getpid() << std::endl; 
-		if( count == 50 ) {
-			std::raise(SIGTERM); 
-		} 
-	}
-	
+	int count = 0;  
+	signal(SIGTERM, signal_handler);   
+	signal(SIGINT, signal_handler);    
+	printf("Programa hora ejecutandose. PID=%d.\n", getpid());   	  
+	while(1) { 
+		printf("Listo para recibir la señal SIGUSR1.\n");
+		sleep(2000);
+	}	
 	return EXIT_SUCCESS;
 }
-
